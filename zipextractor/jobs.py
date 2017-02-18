@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
 
-from datetime import datetime
 import json
 import locale
 import logging
@@ -15,9 +14,10 @@ import urllib2
 import urlparse
 import uuid
 import zipfile
+from datetime import datetime
+
 import requests
 from ckanserviceprovider import job, util
-
 
 if not locale.getlocale()[0]:
     locale.setlocale(locale.LC_ALL, '')
@@ -377,8 +377,11 @@ def ingest_dir(resource, data, logger):
                                 'key': lservicestr}, data)
                             service_working = service_task.get('state', '') in ['pending', 'submitting']
                             if service_working and not last_update_checked:
-                                logger.info("{0} processing resource, will wait until it completes before continuing...".format(service))
-                                if 'last_updated' not in service_task or (datetime.utcnow() - date_str_to_datetime(service_task['last_updated'])).total_seconds() > 3600:
+                                logger.info(
+                                    "{0} processing resource, will wait until it completes before continuing...".format(
+                                        service))
+                                if 'last_updated' not in service_task or (datetime.utcnow() - date_str_to_datetime(
+                                        service_task['last_updated'])).total_seconds() > 3600:
                                     logger.info("{0} is in a stale pending state, re-submitting job...".format(service))
                                     ckan_command('{0}_submit'.format(lservicestr), {
                                         'resource_id': new_res['id']
@@ -390,7 +393,8 @@ def ingest_dir(resource, data, logger):
                     time.sleep(1)
                 else:
                     if service_present:
-                        logger.info("{0} has finished pushing resource, continuing with Zip extraction...".format(service))
+                        logger.info(
+                            "{0} has finished pushing resource, continuing with Zip extraction...".format(service))
 
 
         except:
