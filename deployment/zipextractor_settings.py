@@ -15,7 +15,7 @@ SQLALCHEMY_DATABASE_URI = 'sqlite:////tmp/zipextractor_job_store.db'
 # webserver host and port
 
 HOST = '0.0.0.0'
-PORT = 8811
+PORT = 8822
 
 # logging
 

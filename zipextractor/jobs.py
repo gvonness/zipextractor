@@ -424,7 +424,7 @@ def zip_extract(task_id, input):
     try:
         logger.info("Deleting pre-existing childre of {0}".format(resource['name']))
 
-        ckan_command('zipextractor_delete_children', {'id': data['resource_id']}, data)
+        ckan_command('zipextractor_delete_orphaned_resources', {'id': data['resource_id']}, data)
 
         logger.info("Creating resource for sub-files of {0}".format(resource['id']))
 
