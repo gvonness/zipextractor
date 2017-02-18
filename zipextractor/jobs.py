@@ -17,6 +17,7 @@ import zipfile
 from datetime import datetime
 
 import requests
+import ckanapi
 from ckanserviceprovider import job, util
 
 if not locale.getlocale()[0]:
@@ -346,14 +347,8 @@ def ingest_dir(resource, data, logger):
         logger.info("Creating new resource {0}".format(new_res['name']))
 
         try:
-            url = get_url('resource_create', data['ckan_url'])
-            r = requests.post(url,
-                              data=new_res,
-                              headers={'Content-Type': 'application/json',
-                                       'Authorization': data['api_key']},
-                              files=[('upload', open(file_path, 'rb'))])
-            check_response(r, url, 'CKAN')
-            new_res = r.json()['result']
+            ckan = ckanapi.RemoteCKAN(address=data['ckan_url'], apikey=data['api_key'])
+            new_res = ckan.call_action('resource_create', data_dict=new_res, files=[('upload', open(file_path, 'rb'))])
 
             logger.info("Successfully created resource {0}".format(new_res['name']))
 
