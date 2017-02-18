@@ -348,7 +348,7 @@ def ingest_dir(resource, data, logger):
         try:
             url = get_url('resource_create', data['ckan_url'])
             r = requests.post(url,
-                              data=json.dumps(new_res),
+                              data=new_res,
                               headers={'Content-Type': 'application/json',
                                        'Authorization': data['api_key']},
                               files=[('upload', open(file_path, 'rb'))])
