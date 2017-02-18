@@ -399,6 +399,7 @@ def ingest_dir(resource, data, logger):
 
         except:
             logger.info("Failed to create child resource {0}, continuing...".format(new_res['name']))
+            raise
 
 
 @job.async
